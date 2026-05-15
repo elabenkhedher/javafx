@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.DashboardController"
+      spacing="20">
+    
+    <!-- TITRE -->
+    <Label text="Tableau de Bord" styleClass="page-title"/>
+    
+    <!-- STATISTIQUES EN CARTES -->
+    <GridPane hgap="20" vgap="20">
+        
+        <!-- Carte 1: Total Employés -->
+        <VBox styleClass="stat-card, stat-card-blue" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="👥 Total Employés" styleClass="stat-label"/>
+            <Label fx:id="lblTotalEmployees" text="0" styleClass="stat-value"/>
+            <Label text="Actifs dans l'entreprise" styleClass="stat-description"/>
+        </VBox>
+        
+        <!-- Carte 2: Offres Ouvertes -->
+        <VBox styleClass="stat-card, stat-card-green" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="📋 Offres Ouvertes" styleClass="stat-label"/>
+            <Label fx:id="lblOpenJobs" text="0" styleClass="stat-value"/>
+            <Label text="Postes à pourvoir" styleClass="stat-description"/>
+        </VBox>
+        
+        <!-- Carte 3: Candidatures -->
+        <VBox styleClass="stat-card, stat-card-orange" GridPane.columnIndex="2" GridPane.rowIndex="0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="📄 Candidatures" styleClass="stat-label"/>
+            <Label fx:id="lblTotalCandidates" text="0" styleClass="stat-value"/>
+            <Label text="En attente d'analyse" styleClass="stat-description"/>
+        </VBox>
+        
+        <!-- Carte 4: Taux d'acceptation -->
+        <VBox styleClass="stat-card, stat-card-purple" GridPane.columnIndex="3" GridPane.rowIndex="0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="✅ Taux d'Acceptation" styleClass="stat-label"/>
+            <Label fx:id="lblAcceptanceRate" text="0%" styleClass="stat-value"/>
+            <Label text="Candidats acceptés" styleClass="stat-description"/>
+        </VBox>
+        
+    </GridPane>
+    
+    <!-- GRAPHIQUES -->
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+        
+        <!-- Graphique 1: Employés par département -->
+        <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="Employés par Département" styleClass="chart-title"/>
+            <PieChart fx:id="employeesByDeptChart" VBox.vgrow="ALWAYS" legendVisible="true"/>
+        </VBox>
+        
+        <!-- Graphique 2: Candidatures par mois -->
+        <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="Candidatures (6 derniers mois)" styleClass="chart-title"/>
+            <LineChart fx:id="candidaturesChart" VBox.vgrow="ALWAYS">
+                <xAxis>
+                    <CategoryAxis side="BOTTOM"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="LEFT"/>
+                </yAxis>
+            </LineChart>
+        </VBox>
+        
+    </HBox>
+    
+    <!-- ACTIVITÉS RÉCENTES -->
+    <VBox styleClass="activity-container">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15"/>
+        </padding>
+        
+        <Label text="🔔 Activités Récentes" styleClass="section-title"/>
+        
+        <ListView fx:id="recentActivitiesList" styleClass="activity-list" prefHeight="200">
+        </ListView>
+    </VBox>
+    
+</VBox>

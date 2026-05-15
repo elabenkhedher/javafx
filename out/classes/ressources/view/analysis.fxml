@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AIAnalysisController"
+      spacing="20"
+      style="-fx-background-color: #f4f7f6;">
+
+    <!-- HEADER -->
+    <VBox styleClass="analysis-header" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <Label text="🤖 Analyse IA des Candidatures" styleClass="page-title" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="Système d'analyse automatique basé sur l'intelligence artificielle"
+               styleClass="page-subtitle" style="-fx-text-fill: #7f8c8d;"/>
+    </VBox>
+
+    <!-- BARRE DE CONTRÔLE -->
+    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 0 20 0 20;">
+
+        <VBox spacing="5">
+            <Label text="Offre d'emploi:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="jobComboBox"
+                      prefWidth="350"
+                      promptText="Sélectionner une offre"/>
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <VBox spacing="10" alignment="CENTER">
+            <Button fx:id="analyzeButton"
+                    text="🚀 Lancer l'Analyse"
+                    onAction="#handleAnalyze"
+                    prefWidth="200"
+                    prefHeight="40"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+
+            <ProgressIndicator fx:id="progressIndicator"
+                               visible="false"
+                               prefWidth="30"
+                               prefHeight="30"/>
+        </VBox>
+
+    </HBox>
+
+    <!-- SPLIT VIEW -->
+    <SplitPane dividerPositions="0.45" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0 20 20 20;">
+
+        <!-- GAUCHE: LISTE DES RÉSULTATS -->
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="📊 Résultats d'Analyse" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblResultCount" text="0 candidats" style="-fx-text-fill: #7f8c8d;"/>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Trier par:" style="-fx-font-size: 12px;"/>
+                    <ComboBox fx:id="sortComboBox" prefWidth="180">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Score (décroissant)"/>
+                                <String fx:value="Score (croissant)"/>
+                                <String fx:value="Nom (A-Z)"/>
+                            </FXCollections>
+                        </items>
+                        <value>
+                            <String fx:value="Score (décroissant)"/>
+                        </value>
+                    </ComboBox>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Filtre:" style="-fx-font-size: 12px;"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <fx:define>
+                            <ToggleGroup fx:id="filterGroup"/>
+                        </fx:define>
+                        <RadioButton fx:id="rbTous" text="Tous" selected="true" toggleGroup="$filterGroup"/>
+                        <RadioButton fx:id="rbAcceptes" text="Acceptés" toggleGroup="$filterGroup"/>
+                        <RadioButton fx:id="rbRefuses" text="Refusés" toggleGroup="$filterGroup"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colRank" text="#" prefWidth="40"/>
+                    <TableColumn fx:id="colCandidateName" text="Candidat" prefWidth="150"/>
+                    <TableColumn fx:id="colScore" text="Score" prefWidth="80"/>
+                    <TableColumn fx:id="colRecommandation" text="Recommandation" prefWidth="140"/>
+                    <TableColumn fx:id="colMatch" text="Match" prefWidth="100"/>
+                </columns>
+                <placeholder>
+                    <Label text="Aucune analyse disponible"/>
+                </placeholder>
+            </TableView>
+
+        </VBox>
+
+        <!-- DROITE: DÉTAILS ET GRAPHIQUES -->
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 0 0 0 10;">
+
+                <!-- CARTE DÉTAILS CANDIDAT -->
+                <VBox fx:id="candidateCard" spacing="15" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label fx:id="lblCandidateName" text="Nom du Candidat" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                            <Label fx:id="lblCandidateEmail" text="email@exemple.com" style="-fx-text-fill: #7f8c8d;"/>
+                        </VBox>
+                        <Label fx:id="lblRecommendation" text="Accepté" 
+                               style="-fx-padding: 5 15 5 15; -fx-background-radius: 15; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    
+                    <Separator/>
+                    
+                    <VBox spacing="10">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="Score de correspondance:" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label fx:id="lblScoreValue" text="0%" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                        </HBox>
+                        <ProgressBar fx:id="scoreProgressBar" progress="0.0" maxWidth="Infinity" prefHeight="15"/>
+                    </VBox>
+                    
+                    <HBox spacing="20">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="✅ Compétences Détectées" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                            <VBox fx:id="detectedSkillsContainer" spacing="3"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="❌ Compétences Manquantes" style="-fx-font-weight: bold; -fx-text-fill: #e74c3c;"/>
+                            <VBox fx:id="missingSkillsContainer" spacing="3"/>
+                        </VBox>
+                    </HBox>
+                    
+                    <VBox spacing="5">
+                        <Label text="📝 Analyse Détaillée" style="-fx-font-weight: bold;"/>
+                        <TextArea fx:id="detailsTextArea" editable="false" wrapText="true" prefHeight="150"
+                                  style="-fx-font-family: 'Monospaced'; -fx-font-size: 12px;"/>
+                    </VBox>
+                </VBox>
+
+                <!-- GRAPHIQUE DES SCORES -->
+                <VBox fx:id="chartContainer" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
+                    <Label text="📈 Comparaison des Scores" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <BarChart fx:id="scoresChart" prefHeight="300" legendVisible="false">
+                        <xAxis><CategoryAxis label="Candidats"/></xAxis>
+                        <yAxis><NumberAxis label="Score %" upperBound="100"/></yAxis>
+                    </BarChart>
+                </VBox>
+                
+                <VBox fx:id="placeholderBox" alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS" style="-fx-padding: 50;">
+                    <Label text="Sélectionnez un candidat pour voir les détails" style="-fx-text-fill: #bdc3c7; -fx-font-style: italic;"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+    </SplitPane>
+
+</VBox>

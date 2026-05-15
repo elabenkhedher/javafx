@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.RecruitmentController"
+      spacing="20" style="-fx-padding: 0 0 10 0;">
+
+    <!-- TITRE -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Label text="Gestion du Recrutement" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+        <Button text="+ Nouvelle Offre" styleClass="btn-primary" onAction="#handleNewJob"/>
+        <Button text="+ Nouveau Candidat" styleClass="btn-secondary" onAction="#handleAddCandidate"/>
+        <Button text="Importer CV (PDF)" styleClass="btn-secondary" onAction="#handleImportCV"/>
+    </HBox>
+
+    <!-- ONGLETS: Offres / Candidats -->
+    <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
+
+        <!-- ONGLET 1: OFFRES D'EMPLOI -->
+        <Tab text="Offres d'Emploi" closable="false">
+            <VBox spacing="15" style="-fx-padding: 15 0 0 0;">
+
+                <!-- Filtre statut -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Filtrer :"/>
+                    <RadioButton fx:id="rbTousJobs" text="Toutes" selected="true"/>
+                    <RadioButton fx:id="rbOuvertes" text="Ouvertes"/>
+                    <RadioButton fx:id="rbFermees"  text="Fermées"/>
+                </HBox>
+
+                <!-- Table offres -->
+                <TableView fx:id="jobsTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colJobId"        text="ID"           prefWidth="50"/>
+                        <TableColumn fx:id="colJobTitre"     text="Titre"        prefWidth="200"/>
+                        <TableColumn fx:id="colJobDept"      text="Département"  prefWidth="120"/>
+                        <TableColumn fx:id="colJobCompetences" text="Compétences requises" prefWidth="250"/>
+                        <TableColumn fx:id="colJobStatut"    text="Statut"       prefWidth="90"/>
+                        <TableColumn fx:id="colJobCandidats" text="Candidats"    prefWidth="80"/>
+                        <TableColumn fx:id="colJobActions"   text="Actions"      prefWidth="100"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Aucune offre d'emploi créée."/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <!-- ONGLET 2: CANDIDATS -->
+        <Tab text="Candidats" closable="false">
+            <VBox spacing="15" style="-fx-padding: 15 0 0 0;">
+
+                <!-- Recherche -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Rechercher :"/>
+                    <TextField fx:id="candidateSearchField"
+                               promptText="Nom, prénom ou email..."
+                               prefWidth="300"/>
+                </HBox>
+
+                <!-- Table candidats -->
+                <TableView fx:id="candidatesTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colCandId"      text="ID"         prefWidth="50"/>
+                        <TableColumn fx:id="colCandNom"     text="Nom"        prefWidth="120"/>
+                        <TableColumn fx:id="colCandPrenom"  text="Prénom"     prefWidth="120"/>
+                        <TableColumn fx:id="colCandEmail"   text="Email"      prefWidth="180"/>
+                        <TableColumn fx:id="colCandTel"     text="Téléphone"  prefWidth="120"/>
+                        <TableColumn fx:id="colCandCV"      text="CV"         prefWidth="100"/>
+                        <TableColumn fx:id="colCandActions" text="Actions"    prefWidth="100"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Aucun candidat enregistré."/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+        </Tab>
+
+    </TabPane>
+
+</VBox>

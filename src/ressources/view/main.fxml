@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController"
+            styleClass="root">
+    
+    <!-- HEADER -->
+    <top>
+        <VBox styleClass="header">
+            <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar">
+                <padding>
+                    <Insets top="15" right="20" bottom="15" left="20"/>
+                </padding>
+                
+                <Label text="🏢 HR Manager Pro" styleClass="app-title"/>
+                
+                <Region HBox.hgrow="ALWAYS"/>
+                
+                <Label text="Utilisateur: Admin" styleClass="user-info"/>
+                <Button text="Déconnexion" styleClass="btn-logout" onAction="#handleLogout"/>
+            </HBox>
+            
+            <!-- MENU NAVIGATION -->
+            <HBox spacing="0" styleClass="nav-bar">
+                <padding>
+                    <Insets top="10" right="20" bottom="10" left="20"/>
+                </padding>
+                
+                <Button fx:id="btnDashboard" text="📊 Dashboard" 
+                        styleClass="nav-btn, nav-btn-active" 
+                        onAction="#showDashboard"/>
+                <Button fx:id="btnEmployees" text="👥 Employés" 
+                        styleClass="nav-btn" 
+                        onAction="#showEmployees"/>
+                <Button fx:id="btnRecruitment" text="📋 Recrutement" 
+                        styleClass="nav-btn" 
+                        onAction="#showRecruitment"/>
+                <Button fx:id="btnAnalysis" text="🤖 Analyse IA" 
+                        styleClass="nav-btn" 
+                        onAction="#showAnalysis"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- CONTENU PRINCIPAL -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+        </StackPane>
+    </center>
+    
+    <!-- FOOTER -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="footer">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="© 2026 HR Manager Pro - Système de Gestion RH Intelligent"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>
